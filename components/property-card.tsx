@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { toggleFavorite } from "@/lib/supabase"; // ⭐
+import { toggleFavorite, supabase } from "@/lib/supabase"; // ⭐
+import { getPublicImageUrl } from "@/lib/get-public-image-url"; // 👈 NUEVO
 
 export interface PropertyProps {
   id: string;
@@ -49,12 +50,14 @@ export default function PropertyCard({
     }
   };
 
+  const validImageUrl = getPublicImageUrl(imageUrl); // ✅ construye bien el URL de la imagen
+
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
       <div className="relative">
         <AspectRatio ratio={4 / 3}>
           <Image
-            src={imageUrl || "/fallback-image.jpg"} // fallback en caso de que no haya imagen
+            src={validImageUrl}
             alt={title}
             fill
             className="object-cover transition-transform duration-500 hover:scale-105"
@@ -98,7 +101,7 @@ export default function PropertyCard({
         <p className="mb-2 text-sm text-muted-foreground line-clamp-1">{address}</p>
 
         <p className="mb-4 text-xl font-bold">
-          ${price ? price.toLocaleString() : "N/A"}
+          {price ? `$${price.toLocaleString()}` : "N/A"}
           {type === "rent" && <span className="text-sm font-normal text-muted-foreground">/mo</span>}
         </p>
 
