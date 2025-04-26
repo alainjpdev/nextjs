@@ -151,10 +151,13 @@ export default function Navbar() {
 
         {/* Right: User Icon */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
-            <User className="h-5 w-5" />
-            <span className="sr-only">User account</span>
-          </Button>
+        <Button asChild variant="ghost" size="icon">
+  <Link href="/login">
+    <User className="h-5 w-5" />
+    <span className="sr-only">User account</span>
+  </Link>
+</Button>
+
         </div>
       </div>
     </header>
