@@ -21,7 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { getProperties } from "@/lib/supabase";
-import { parseImages } from "@/lib/parseImages"; // 👈 IMPORTANTE
+import { parseImages } from "@/lib/parse-images"; // 👈 IMPORTANTE
 
 export default function SearchPage() {
   const [properties, setProperties] = useState<any[]>([]);

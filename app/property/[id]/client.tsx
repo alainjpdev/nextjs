@@ -14,12 +14,12 @@ interface Property {
   id: string;
   title: string;
   address: string;
-  price: number;
+  price: number | null;
   type: "sale" | "rent";
-  bedrooms: number;
-  bathrooms: number;
-  squareFeet: number;
-  images: string[]; // o ajusta si tu campo en Supabase es diferente
+  bedrooms: number | null;
+  bathrooms: number | null;
+  squareFeet: number | null;
+  images: string[];
 }
 
 export default function PropertyPageClient({ property }: { property: Property }) {
@@ -46,7 +46,9 @@ export default function PropertyPageClient({ property }: { property: Property })
 
           <div className="flex flex-col items-start justify-end gap-2 md:items-end">
             <div className="text-3xl font-bold md:text-4xl">
-              ${property.price.toLocaleString()}
+              {typeof property.price === "number"
+                ? `$${property.price.toLocaleString()}`
+                : "Price on request"}
               {property.type === "rent" && (
                 <span className="text-base font-normal text-muted-foreground">/month</span>
               )}
@@ -54,22 +56,29 @@ export default function PropertyPageClient({ property }: { property: Property })
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <Bed className="h-4 w-4" />
-                <span>{property.bedrooms}</span>
+                <span>{property.bedrooms ?? "?"}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Bath className="h-4 w-4" />
-                <span>{property.bathrooms}</span>
+                <span>{property.bathrooms ?? "?"}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Square className="h-4 w-4" />
-                <span>{property.squareFeet.toLocaleString()} sq ft</span>
+                <span>
+                  {typeof property.squareFeet === "number"
+                    ? `${property.squareFeet.toLocaleString()} sq ft`
+                    : "?"}
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <PropertyGallery imageUrl={property.images[0]} propertyTitle={property.title} />
+      <PropertyGallery
+        imageUrl={property.images.length > 0 ? property.images[0] : ""}
+        propertyTitle={property.title}
+      />
 
       <div className="mt-8 grid gap-8 md:grid-cols-3">
         <div className="md:col-span-2">
@@ -84,7 +93,13 @@ export default function PropertyPageClient({ property }: { property: Property })
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold">Property Description</h2>
                 <p className="text-muted-foreground">
-                  Discover this {property.title.toLowerCase()} featuring {property.bedrooms} bedrooms and {property.bathrooms} bathrooms across {property.squareFeet.toLocaleString()} sq ft.
+                  Discover this {property.title.toLowerCase()} featuring{" "}
+                  {property.bedrooms ?? "?"} bedrooms and{" "}
+                  {property.bathrooms ?? "?"} bathrooms across{" "}
+                  {typeof property.squareFeet === "number"
+                    ? `${property.squareFeet.toLocaleString()}`
+                    : "?"}{" "}
+                  sq ft.
                 </p>
               </div>
             </TabsContent>
@@ -105,7 +120,10 @@ export default function PropertyPageClient({ property }: { property: Property })
               <CardTitle>Contact Agent</CardTitle>
             </CardHeader>
             <CardContent>
-              <PropertyContactForm propertyId={property.id} propertyTitle={property.title} />
+              <PropertyContactForm
+                propertyId={property.id}
+                propertyTitle={property.title}
+              />
             </CardContent>
           </Card>
         </div>

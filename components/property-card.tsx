@@ -96,11 +96,11 @@ export default function PropertyCard({
         <p className="mb-2 text-sm text-muted-foreground line-clamp-1">{address}</p>
 
         <p className="mb-4 text-xl font-bold">
-          {price ? `$${price.toLocaleString()}` : "N/A"}
-          {type === "rent" && (
-            <span className="text-sm font-normal text-muted-foreground">/mo</span>
-          )}
-        </p>
+  {typeof price === "number" ? `$${price.toLocaleString()}` : "N/A"}
+  {type === "rent" && (
+    <span className="text-sm font-normal text-muted-foreground">/mo</span>
+  )}
+</p>
 
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
