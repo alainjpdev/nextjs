@@ -1,19 +1,36 @@
-// lib/parseImages.ts
-export function parseImages(images: any): string[] {
-  if (!images) return [];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json }
+  | Json[];
 
-  if (Array.isArray(images)) {
-    return images.map((url) => (typeof url === "string" ? url : "")).filter(Boolean);
-  }
-
-  if (typeof images === "string") {
-    return images
-      .replace("{", "")
-      .replace("}", "")
-      .split(",")
-      .map((url) => url.trim())
-      .filter(Boolean);
-  }
-
-  return [];
-}
+export type Database = {
+  public: {
+    Tables: {
+      listings: {
+        Row: {
+          id: string;
+          title: string;
+          address: string;
+          price: number;
+          description: string | null;
+          type: string;
+          bedrooms: number | null;
+          bathrooms: number | null;
+          square_feet: number | null;
+          year_built: number | null;
+          features: Json | null;
+          status: string | null;
+          lat: number | null;
+          lng: number | null;
+          images: Json | null;
+          created_at: string;
+          updated_at: string;
+          user_id: string | null;
+        };
+      };
+    };
+  };
+};

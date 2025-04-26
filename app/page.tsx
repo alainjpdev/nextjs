@@ -99,6 +99,7 @@ export default function Home() {
       </section>
 
       {/* New Listings */}
+      {/*  
       <section className="bg-muted/30 py-16">
         <div className="container px-4 md:px-6">
           <div className="mb-10 flex justify-between items-end">
@@ -136,8 +137,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Popular Rentals */}
+      {/*
       <section className="py-16">
         <div className="container px-4 md:px-6">
           <div className="mb-10 flex justify-between items-end">
@@ -175,6 +178,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
+      
 
       {/* CTA Section */}
       <CTASection />

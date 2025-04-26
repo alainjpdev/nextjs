@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { toggleFavorite } from "@/lib/supabase"; // 👈 solo toggleFavorite, no getPublicImageUrl
+import { toggleFavorite } from "@/lib/supabase"; // ✅ quitar getPublicImageUrl
 
 export interface PropertyProps {
   id: string;
@@ -49,12 +49,14 @@ export default function PropertyCard({
     }
   };
 
+  const validImageUrl = imageUrl; // ✅ no usar getPublicImageUrl
+
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
       <div className="relative">
         <AspectRatio ratio={4 / 3}>
           <Image
-            src={imageUrl || "/fallback.jpg"} // ✅ usa imageUrl directo, sin getPublicImageUrl
+            src={validImageUrl}
             alt={title}
             fill
             className="object-cover transition-transform duration-500 hover:scale-105"
@@ -63,10 +65,7 @@ export default function PropertyCard({
         </AspectRatio>
 
         <div className="absolute left-2 right-2 top-2 flex justify-between">
-          {isNew && (
-            <Badge className="bg-accent text-accent-foreground">New</Badge>
-          )}
-
+          {isNew && <Badge className="bg-accent text-accent-foreground">New</Badge>}
           <Button
             variant="secondary"
             size="icon"
@@ -79,7 +78,6 @@ export default function PropertyCard({
                 isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground"
               )}
             />
-            <span className="sr-only">Add to favorites</span>
           </Button>
         </div>
       </div>

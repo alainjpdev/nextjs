@@ -2,11 +2,7 @@ export function parseImages(images: any): string[] {
     if (!images) return [];
   
     if (Array.isArray(images)) {
-      return images.map((url) =>
-        typeof url === "string"
-          ? url.replace(/([^:]\/)\/+/g, "$1") // 👈 REGLA para quitar doble slash
-          : ""
-      ).filter(Boolean);
+      return images.map((url) => (typeof url === "string" ? url : "")).filter(Boolean);
     }
   
     if (typeof images === "string") {
@@ -14,7 +10,7 @@ export function parseImages(images: any): string[] {
         .replace("{", "")
         .replace("}", "")
         .split(",")
-        .map((url) => url.trim().replace(/([^:]\/)\/+/g, "$1")) // 👈 AQUÍ TAMBIÉN
+        .map((url) => url.trim())
         .filter(Boolean);
     }
   

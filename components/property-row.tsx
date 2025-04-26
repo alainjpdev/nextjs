@@ -1,16 +1,17 @@
+"use client";
+
 import PropertyCard from "@/components/property-card";
-import { newProperties, rentalProperties } from "@/lib/data";
 
 interface PropertyRowProps {
   title: string;
-  category: "buy" | "rent";
+  properties: any[]; // (o tu tipo real si quieres ponerlo luego bien tipado)
 }
 
-export default function PropertyRow({ title, category }: PropertyRowProps) {
-  const properties = category === "buy" ? newProperties : rentalProperties;
-  
+export default function PropertyRow({ title, properties }: PropertyRowProps) {
   return (
     <div>
+      <h2 className="mb-6 text-2xl font-bold">{title}</h2>
+
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {properties.map((property) => (
           <PropertyCard
@@ -22,9 +23,9 @@ export default function PropertyRow({ title, category }: PropertyRowProps) {
             type={property.type}
             bedrooms={property.bedrooms}
             bathrooms={property.bathrooms}
-            squareFeet={property.squareFeet}
-            imageUrl={property.imageUrl}
-            isNew={category === "buy"}
+            squareFeet={property.square_feet}
+            imageUrl={Array.isArray(property.images) ? property.images[0] : ""}
+            isNew={false} // Puedes cambiar esto si quieres pasar otra prop
           />
         ))}
       </div>
